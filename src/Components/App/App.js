@@ -10,35 +10,30 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchResults: {
-				name: '',
-				artist: '',
-				album: ''
-			}
+			searchResults: [],
+			playlistName: 'Songs All Day',
+			playlistTracks: new Set([
+				{
+					name: 'Song Time',
+					artist: 'Me!',
+					album: 'This Is It'
+				},
+				{
+					name: 'Rhyme It',
+					artist: 'Me, again',
+					album: 'Here It Is'
+				}
+			])
 		};
 
 		this.addTrack = this.addTrack.bind(this);
-
-		this.playlistName = 'Songs All Day';
-		this.playlistTracks = [
-			{
-				name: 'Song Time',
-				artist: 'Me!',
-				album: 'This Is It'
-			},
-			{
-				name: 'Rhyme It',
-				artist: 'Me, again',
-				album: 'Here It Is'
-			}
-		];
 	}
 
 	addTrack(track) {
-		if (playlist.id !== this.state.playlistTracks[track]) {
-			playlistTracks.push(track);
-			this.setstate({ playlist: event.target.value });
-		}
+		// let playlistTracks = new Set();
+		this.state.playlistTracks.add(track);
+		let tracks = this.state.playlistTracks;
+		this.setstate({ playlistTracks: tracks });
 	}
 
 	render() {
