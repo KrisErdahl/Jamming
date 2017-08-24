@@ -1,30 +1,43 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import './App.css';
 import SearchBar from './../SearchBar/SearchBar';
 import SearchResults from './../SearchResults/SearchResults';
 import Playlist from './../Playlist/Playlist';
-import TrackList from './../TrackList/TrackList';
+// import TrackList from './../TrackList/TrackList';
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchResults: [
-				{
-					name: '',
-					artist: '',
-					album: ''
-				}
-			],
-			playlistName: 'Songs All Day',
-			playlistTracks: [
-				{ name: 'Song Time', artist: 'Me!', album: 'This Is It' },
-				{ name: 'Rhyme It', artist: 'Me, again', album: 'Here It Is' }
-			],
-			tracks: ''
+			searchResults: {
+				name: '',
+				artist: '',
+				album: ''
+			}
 		};
+
+		this.playlistName = 'Songs All Day';
+		this.playlistTracks = [
+			{
+				name: 'Song Time',
+				artist: 'Me!',
+				album: 'This Is It'
+			},
+			{
+				name: 'Rhyme It',
+				artist: 'Me, again',
+				album: 'Here It Is'
+			}
+		];
 	}
+
+	addTrack(track) {
+		if (playlist.id !== this.state.playlistTracks[track]) {
+			playlistTracks.push(track);
+		}
+	}
+
 	render() {
 		return (
 			<div>
@@ -32,9 +45,9 @@ class App extends React.Component {
 					Ja<span className="highlight">mmm</span>ing
 				</h1>
 				<div className="App">
-					<SearchResults searchResults={this.state.searchResults} />
+					<SearchBar />
 					<div className="App-playlist">
-						<TrackList tracks={this.state.tracks} />
+						<SearchResults searchResults={this.state.searchResults} tracks={this.state.tracks} />
 						<Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} />
 					</div>
 				</div>

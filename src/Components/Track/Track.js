@@ -1,9 +1,9 @@
 import React from 'react';
 import './Track.css';
 
-const TrackAction = {
-	renderAction() {
-		if (TrackAction === true) {
+class Track extends React.Component {
+	renderAction(Track) {
+		if (Track === true) {
 			return <a>-</a>;
 			// or '-';
 		} else {
@@ -11,10 +11,7 @@ const TrackAction = {
 			// or '+';
 		}
 	}
-};
-//Could also be written in the Track component with
 
-class Track extends React.Component {
 	render() {
 		return (
 			<div className="Track">
@@ -26,8 +23,9 @@ class Track extends React.Component {
 						{this.props.track.artist} | {this.props.track.album}
 					</p>
 				</div>
-				<a className="TrackAction" />
-				{/* <!-- + or - will go in TrackAction (Track-action) --> */}
+				<a className="Track-action">
+					{this.renderAction(Track)}
+				</a>
 			</div>
 		);
 	}
