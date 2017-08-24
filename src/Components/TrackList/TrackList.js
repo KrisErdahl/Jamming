@@ -6,7 +6,7 @@ class TrackList extends React.Component {
 	render() {
 		return (
 			<div className="TrackList">
-				{this.props.tracks.map(track => <Track onAdd={this.props.onAdd} key={track.id} track={track} />)}
+				{this.props.tracks.forEach(track => <Track onAdd={this.props.onAdd} key={track.id} track={track} />)}
 			</div>
 		);
 	}
