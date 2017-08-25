@@ -1,5 +1,4 @@
 const clientID = '627216329abc4fa89e00bf36b262c17e';
-const secret = 'e9db99b6bbb4472e9989525949174135';
 let accessToken = '';
 const redirectURI = 'http://localhost:3000/';
 
@@ -22,7 +21,6 @@ const Spotify = {
 		}
 	},
 	search(term) {
-		Spotify.getAccessToken();
 		return new Promise(resolve => resolve(accessToken))
 			.then(() => {
 				return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
@@ -35,7 +33,7 @@ const Spotify = {
 			.then(jsonResponse => {
 				if (jsonResponse.tracks) {
 					console.log('Got a response');
-					return jsonResponse.map(track => ({
+					return jsonResponse.tracks.map(track => ({
 						id: track.id,
 						name: track.name,
 						artist: track.artists[0].name,
