@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 // import ReactDOM from 'react-dom';
 import './App.css';
 import SearchBar from './../SearchBar/SearchBar';
@@ -60,7 +60,7 @@ class App extends React.Component {
 				<div className="App">
 					<SearchBar onSearch={this.search} />
 					<div className="App-playlist">
-						<SearchResults onAdd={this.addTrack} searchResults={this.state.tracks} tracks={this.state.tracks} />
+						<SearchResults onAdd={this.addTrack} searchResults={this.state.searchResults} tracks={this.state.tracks} />
 						<Playlist
 							onRemove={this.removeTrack}
 							onNameChange={this.updatePlaylistName}

@@ -8,8 +8,8 @@ class Track extends React.Component {
 		this.removeTrack = this.removeTrack.bind(this);
 	}
 
-	renderAction(Track) {
-		if (Track === true) {
+	renderAction(track) {
+		if (track === true) {
 			return <a onClick={this.removeTrack}>-</a>;
 			// or '-';
 		} else {
@@ -38,7 +38,7 @@ class Track extends React.Component {
 					</p>
 				</div>
 				<a className="Track-action">
-					{this.renderAction(Track)}
+					{this.renderAction(this.props.track.name)}
 				</a>
 			</div>
 		);
