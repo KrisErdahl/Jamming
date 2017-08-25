@@ -11,19 +11,8 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			searchResults: [],
-			playlistName: 'Songs All Day',
-			playlistTracks: new Set([
-				{
-					name: 'Song Time',
-					artist: 'Me!',
-					album: 'This Is It'
-				},
-				{
-					name: 'Rhyme It',
-					artist: 'Me, again',
-					album: 'Here It Is'
-				}
-			])
+			playlistName: 'New Playlist',
+			playlistTracks: []
 		};
 
 		this.addTrack = this.addTrack.bind(this);
@@ -35,8 +24,10 @@ class App extends React.Component {
 
 	addTrack(track) {
 		let tracks = this.state.playlistTracks;
-		tracks.add(track);
-		this.setState({ playlistTracks: tracks });
+		if (!tracks.includes(track)) {
+			tracks.push(track);
+			this.setState({ playlistTracks: tracks });
+		}
 	}
 
 	removeTrack(track) {
