@@ -60,57 +60,55 @@ const Spotify = {
 			});
 	},
 	savePlaylist(playlistName, trackURIs) {
+		Spotify.getAccessToken();
+		let userToken = accessToken;
+		console.log(userToken);
 		if (playlistName && trackURIs) {
-			Spotify.getAccessToken();
-			let userToken = accessToken;
-			console.log(userToken);
-			let savePlaylistHeader = {
+			// let savePlaylistHeader = {
+			// 	headers: {
+			// 		Authorization: `Bearer ${userToken}`
+			let userID = '';
+			return fetch(`https://api.spotify.com/v1/me`, {
 				headers: {
 					Authorization: `Bearer ${userToken}`
 				}
-			};
-			let userID = '';
-			return (
-				fetch(`https://api.spotify.com/v1/me`, {
-					headers: {
-						Authorization: `Bearer ${userToken}`
+			})
+				.then(response => {
+					if (response.ok) {
+						return response.json();
+					}
+					throw new Error('Request to saveplaylist1 failed!');
+					// networkError => console.log(networkError.message);
+				})
+				.then(response => response.json())
+				.then(jsonResponse => {
+					if (jsonResponse.user) {
+						console.log('Got a user response');
+						console.log(jsonResponse.user.map(user => ({ userID: user.id })));
+						return jsonResponse.user.map(user => ({ userID: user.id }));
 					}
 				})
-					.then(response => {
-						if (response.ok) {
-							return response.json();
-						}
-						throw new Error('Request to saveplaylist1 failed!');
-						// networkError => console.log(networkError.message);
-					})
-					.then(response => response.json())
-					.then(jsonResponse => {
-						if (jsonResponse.user) {
-							console.log('Got a user response');
-							return jsonResponse.user.map(user => ({ userID: user.id }));
-						}
-					})
-					.then(fetch(`https://api.spotify.com/v1/users/${userID}/playlists`), {
-						method: 'POST',
-						body: JSON.stringify({
-							id: `"description" : "Newplaylistdescription","public":true,"name": ${playlistName}`
-						}),
-						headers: { Authorization: `Bearer ${userToken}` }
-					})
-					.then(response => {
-						if (response.ok) {
-							return response.json();
-						}
-						throw new Error('Request saveplaylist2 failed!');
-					})
-					// .then(jsonResponse => jsonResponse)
-					.then(jsonResonse => {
-						if (jsonResponse.playlist) {
-							console.log('Got a playlist response');
-							return jsonResponse.playlist.map(playlist => ({ playlistID: playlist.id }));
-						}
-					})
-			);
+				.then(fetch(`https://api.spotify.com/v1/users/${userID}/playlists`), {
+					method: 'POST',
+					body: JSON.stringify({
+						id: `"description" : "Newplaylistdescription","public":true,"name": ${playlistName}`
+					}),
+					headers: { Authorization: `Bearer ${userToken}`, 'Content-Type': 'application/json' }
+				})
+				.then(response => {
+					if (response.ok) {
+						return response.json();
+					}
+					throw new Error('Request saveplaylist2 failed!');
+				})
+				.then(response => response.json())
+				.then(jsonResonse => {
+					if (jsonResponse.playlist) {
+						console.log('Got a playlist response');
+						return jsonResponse.playlist.map(playlist => ({ playlistID: playlist.id }));
+					}
+				})
+				.then();
 		} else {
 			return;
 		}
