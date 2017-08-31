@@ -9,10 +9,13 @@ import Spotify from './../../util/Spotify/Spotify';
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+		let accessToken = Spotify.getAccessToken();
 		this.state = {
 			searchResults: [],
 			playlistName: 'New Playlist',
-			playlistTracks: []
+			playlistTracks: [],
+			accessToken: accessToken,
+			expiresIn: 0
 		};
 
 		this.addTrack = this.addTrack.bind(this);
@@ -21,6 +24,11 @@ class App extends React.Component {
 		this.savePlaylist = this.savePlaylist.bind(this);
 		this.search = this.search.bind(this);
 	}
+
+	// componentWillMount() {
+	// 	let accessToken = Spotify.getAccessToken();
+	// 	this.setState({ accessToken });
+	// }
 
 	addTrack(track) {
 		let tracks = this.state.playlistTracks;
@@ -50,11 +58,11 @@ class App extends React.Component {
 
 	search(term) {
 		console.log(term);
-		Spotify.search(term).then(searchResults => {
+		Spotify.search(term, this.state.accessToken).then(searchResults => {
 			this.setState({ searchResults: searchResults });
 		});
 	}
-
+	//React Router
 	render() {
 		return (
 			<div>

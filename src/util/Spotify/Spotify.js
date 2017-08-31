@@ -33,8 +33,8 @@ const Spotify = {
 		}
 	},
 
-	search(term) {
-		let accessToken = Spotify.getAccessToken();
+	search(term, accessToken) {
+		// let accessToken = Spotify.getAccessToken();
 		console.log(accessToken);
 		return (
 			fetch(`https://api.spotify.com/v1/search?type=track,artist,album&q=${term}`, {
@@ -44,74 +44,68 @@ const Spotify = {
 			})
 				.then(response => {
 					let body = response.json();
-					// console.log(body);
 					return body;
 				})
-				//postman chrome extention
+				//postman chrome extention used to determine location of track information
 				.then(data => {
 					console.log(data);
 					let tracks = data.tracks;
 					return tracks.items.map(track => ({
 						id: track.id,
-						//FIX AND ADD ALL track. information
-						name: track.name
-						// artist: data.artists[0].name,
-						// album: data.album.name,
-						// uri: data.uri
+						name: track.name,
+						artist: track.artists[0].name,
+						album: track.album.name,
+						uri: track.uri
 					}));
 				})
 		);
 	},
 
-	// .then(jsonResponse => {
-	// 	if (jsonResponse.track) {
-	// 		console.log('Got a tracks response');
-	// 		return jsonResponse.track.map(track => ({
-	// 			id: track.id,
-	// 			name: track.name,
-	// 			artist: track.artists[0].name,
-	// 			album: track.album.name,
-	// 			uri: track.uri
-	// 		}));
-	// } else {
-	// 	console.log('No responses found');
-	// 	return [];
-	// }
-
 	savePlaylist(playlistName, trackUris) {
 		if (!playlistName || !trackUris.length) {
 			return;
-		}
-		let userToken = Spotify.getAccessToken();
-		console.log(userToken);
-		let userID;
-		return fetch(`https://api.spotify.com/v1/me`, {
-			headers: {
-				Authorization: `Bearer ${userToken}`
-			}
-		})
-			.then(response => response.json())
-			.then(jsonResponse => {
-				userID = jsonResponse.id;
-				return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
-					headers: {
-						Authorization: `Bearer ${userToken}`
-					},
-					method: 'POST',
-					body: JSON.stringify({ name: playlistName })
+		} else {
+			let userToken = Spotify.getAccessToken();
+			console.log(userToken);
+			let userID;
+			return fetch(`https://api.spotify.com/v1/me`, {
+				headers: {
+					Authorization: `Bearer ${userToken}`
+				}
+			})
+				.then(response => {
+					let body = response.json();
+					return body;
 				})
-					.then(response => response.json())
-					.then(jsonResponse => {
-						const playlistId = jsonResponse.id;
-						return fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistId}/tracks`, {
-							headers: {
-								Authorization: `Bearer ${userToken}`
-							},
-							method: 'POST',
-							body: JSON.stringify({ uris: trackUris })
-						});
-					});
-			});
+				.then(data => {
+					console.log(data);
+					let userID = data.id;
+					return userID;
+				})
+				.then(
+					fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
+						headers: {
+							Authorization: `Bearer ${userToken}`
+						},
+						method: 'POST',
+						body: JSON.stringify({ name: playlistName })
+					})
+						.then(response => {
+							let body = response.json();
+							return body;
+						})
+						.then(data => {
+							const playlistId = data.id;
+							return fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistId}/tracks`, {
+								headers: {
+									Authorization: `Bearer ${userToken}`
+								},
+								method: 'POST',
+								body: JSON.stringify({ uris: trackUris })
+							});
+						})
+				);
+		}
 	}
 };
 
