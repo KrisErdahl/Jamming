@@ -8,8 +8,8 @@ class Track extends React.Component {
 		this.removeTrack = this.removeTrack.bind(this);
 	}
 
-	renderAction(track) {
-		if (track) {
+	renderAction(playlistTracks) {
+		if (playlistTracks[track]) {
 			return <a onClick={this.removeTrack}>-</a>;
 			// or '-';
 		} else {
@@ -38,7 +38,7 @@ class Track extends React.Component {
 						{this.props.track.artist} | {this.props.track.album}
 					</p>
 				</div>
-				<div className="Track-action">
+				<div className="Track-action" playlistTracks={this.props.playlistTracks}>
 					{this.renderAction(this.props.playlistTracks)}
 				</div>
 			</div>
