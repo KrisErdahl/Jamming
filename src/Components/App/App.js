@@ -40,10 +40,14 @@ class App extends React.Component {
 
 	removeTrack(track) {
 		let tracks = this.state.playlistTracks;
-		if (track.id) {
-			tracks.delete(track);
-		}
-		this.setState({ playlistTracks: tracks });
+		console.log('tracks', tracks);
+		let id = track.id;
+		const removeFromPlaylist = tracks.filter((_, track) => track === id);
+		console.log('removeFromPlaylist', removeFromPlaylist);
+		// if (track.id) {
+		// 	tracks.delete(track);
+		// }
+		this.setState({ playlistTracks: removeFromPlaylist });
 	}
 
 	updatePlaylistName(name) {

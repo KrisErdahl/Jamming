@@ -46,7 +46,7 @@ const Spotify = {
 					let body = response.json();
 					return body;
 				})
-				//postman chrome extention used to determine location of track information
+				//used postman chrome extention used to determine location of track information
 				.then(data => {
 					console.log(data);
 					let tracks = data.tracks;
