@@ -49,7 +49,7 @@ class Track extends React.Component {
 					</p>
 				</div>
 				<div className="Track-action">
-					{this.renderAction(this.props.tracks)}
+					{this.renderAction()}
 				</div>
 			</div>
 		);
