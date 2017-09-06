@@ -17,7 +17,7 @@ const Spotify = {
 			window.history.pushState('Access Token', null, '/'); // This clears the parameters, allowing us to grab a new access token when it expires.
 			return accessToken;
 		} else {
-			const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
+			const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-private&playlist-modify-public&user-read-private&redirect_uri=${redirectURI}`;
 			window.location = accessUrl;
 		}
 	},
@@ -92,15 +92,23 @@ const Spotify = {
 			.then(jsonResponse => {
 				userId = jsonResponse.id;
 				return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
-					headers: headers,
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+						Accept: `application/json`,
+						'Content-Type': `application/json`
+					},
 					method: 'POST',
-					body: JSON.stringify({ name: name })
+					body: JSON.stringify({ name: name, public: false })
 				})
 					.then(response => response.json())
 					.then(jsonResponse => {
 						const playlistId = jsonResponse.id;
 						return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`, {
-							headers: headers,
+							headers: {
+								Authorization: `Bearer ${accessToken}`,
+								Accept: `application/json`,
+								'Content-Type': `application/json`
+							},
 							method: 'POST',
 							body: JSON.stringify({ uris: trackUris })
 						});
