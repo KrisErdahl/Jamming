@@ -40,17 +40,23 @@ class App extends React.Component {
 
 	removeTrack(track) {
 		let tracks = this.state.playlistTracks;
-		let props = this.props;
-		console.log('tracks', tracks);
-		// var id = tracks.indexOf(this.props.track); RESULTED in -1
-		// console.log(id);
-		const removeFromPlaylist = tracks.filter(item => track.id !== props.track.id);
-		console.log('removeFromPlaylist', removeFromPlaylist);
-		// if (track.id) {
-		// 	tracks.delete(track);
-		// }
-		this.setState({ playlistTracks: removeFromPlaylist });
+		tracks = tracks.filter(currentTrack => currentTrack.id !== track.id);
+		this.setState({ playlistTracks: tracks });
 	}
+
+	// removeTrack(track) {
+	// 	let tracks = this.state.playlistTracks;
+	// 	let props = this.props;
+	// 	console.log('tracks', tracks);
+	// 	// var id = tracks.indexOf(this.props.track); RESULTED in -1
+	// 	// console.log(id);
+	// 	const removeFromPlaylist = tracks.filter(item => track !== props.track);
+	// 	console.log('removeFromPlaylist', removeFromPlaylist);
+	// 	// if (track.id) {
+	// 	// 	tracks.delete(track);
+	// 	// }
+	// 	this.setState({ playlistTracks: removeFromPlaylist });
+	// }
 
 	updatePlaylistName(name) {
 		this.setState({ playlistName: name });

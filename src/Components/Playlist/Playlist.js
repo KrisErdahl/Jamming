@@ -6,7 +6,7 @@ class Playlist extends React.Component {
 	constructor(props) {
 		super(props);
 		// this.state = { newValue: '' };
-		// this.onNameChange = this.props.onNameChange.bind(this);
+		this.onNameChange = this.props.onNameChange.bind(this);
 		this.handleNameChange = this.handleNameChange.bind(this);
 	}
 
