@@ -98,11 +98,15 @@ const Spotify = {
 						'Content-Type': `application/json`
 					},
 					method: 'POST',
-					body: JSON.stringify({ name: name, public: false })
+					body: JSON.stringify({ name: name })
 				})
 					.then(response => response.json())
 					.then(jsonResponse => {
 						const playlistId = jsonResponse.id;
+						console.log('playlistId', playlistId);
+						const accessToken = Spotify.getAccessToken();
+						console.log(accessToken);
+						console.log('trackUris', trackUris);
 						return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`, {
 							headers: {
 								Authorization: `Bearer ${accessToken}`,
