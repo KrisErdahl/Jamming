@@ -44,37 +44,22 @@ class App extends React.Component {
 		this.setState({ playlistTracks: tracks });
 	}
 
-	// removeTrack(track) {
-	// 	let tracks = this.state.playlistTracks;
-	// 	let props = this.props;
-	// 	console.log('tracks', tracks);
-	// 	// var id = tracks.indexOf(this.props.track); RESULTED in -1
-	// 	// console.log(id);
-	// 	const removeFromPlaylist = tracks.filter(item => track !== props.track);
-	// 	console.log('removeFromPlaylist', removeFromPlaylist);
-	// 	// if (track.id) {
-	// 	// 	tracks.delete(track);
-	// 	// }
-	// 	this.setState({ playlistTracks: removeFromPlaylist });
-	// }
-
 	updatePlaylistName(name) {
 		this.setState({ playlistName: name });
 	}
 
 	savePlaylist() {
-		console.log('playlistTracks', this.state.playlistTracks);
+		// console.log('playlistTracks', this.state.playlistTracks);
 		let trackUris = this.state.playlistTracks.map(function(track) {
 			return track.uri;
 		});
-		// let trackUris = [this.state.playlistTracks[{ Array: uri }]];
-		console.log('app trackUris', trackUris);
+		// console.log('app trackUris', trackUris);
 		Spotify.savePlaylist(this.state.playlistName, trackUris);
 		this.setState({ playlistTracks: [], searchResults: [] });
 	}
 
 	search(term) {
-		console.log(term);
+		// console.log(term);
 		Spotify.search(term, this.state.accessToken).then(searchResults => {
 			this.setState({ searchResults: searchResults });
 		});

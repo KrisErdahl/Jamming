@@ -9,7 +9,7 @@ const Spotify = {
 		}
 		const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
 		const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
-		console.log(accessTokenMatch, expiresInMatch);
+		// console.log(accessTokenMatch, expiresInMatch);
 		if (accessTokenMatch && expiresInMatch) {
 			accessToken = accessTokenMatch[1];
 			const expiresIn = Number(expiresInMatch[1]);
@@ -53,8 +53,7 @@ const Spotify = {
 	// },
 
 	search(term, accessToken) {
-		// let accessToken = Spotify.getAccessToken();
-		console.log(accessToken);
+		// console.log(accessToken);
 		return (
 			fetch(`https://api.spotify.com/v1/search?type=track,artist,album&q=${term}`, {
 				headers: {
@@ -67,7 +66,7 @@ const Spotify = {
 				})
 				//used postman chrome extention used to determine location of track information
 				.then(data => {
-					console.log(data);
+					// console.log(data);
 					let tracks = data.tracks;
 					return tracks.items.map(track => ({
 						id: track.id,
@@ -103,10 +102,10 @@ const Spotify = {
 					.then(response => response.json())
 					.then(jsonResponse => {
 						const playlistId = jsonResponse.id;
-						console.log('playlistId', playlistId);
+						// console.log('playlistId', playlistId);
 						const accessToken = Spotify.getAccessToken();
-						console.log(accessToken);
-						console.log('trackUris', trackUris);
+						// console.log(accessToken);
+						// console.log('trackUris', trackUris);
 						return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`, {
 							headers: {
 								Authorization: `Bearer ${accessToken}`,
@@ -169,43 +168,3 @@ const Spotify = {
 };
 
 export default Spotify;
-
-// .then(response => {
-// 	if (response.ok) {
-// 		return response.json();
-// 	}
-// 	throw new Error('Request to saveplaylist1 failed!');
-// 	// networkError => console.log(networkError.message);
-// })
-// .then(response => response.json())
-// .then(jsonResponse => {
-// 	if (jsonResponse.user) {
-// 		console.log('Got a user response');
-// 		console.log(jsonResponse.user.map(user => ({ userID: user.id })));
-// 		return jsonResponse.user.map(user => ({ userID: user.id }));
-// 	}
-// })
-// .then(fetch(`https://api.spotify.com/v1/users/${userID}/playlists`), {
-// 	method: 'POST',
-// 	body: JSON.stringify({
-// 		id: `name: ${playlistName}`
-// 	}),
-// 	headers: { Authorization: `Bearer ${userToken}`, '`Content-Type`': 'application/json' }
-// })
-// .then(response => {
-// 	if (response.ok) {
-// 		return response.json();
-// 	}
-// 	throw new Error('Request saveplaylist2 failed!');
-// })
-// .then(response => response.json())
-// .then(jsonResponse => {
-// 	if (jsonResponse.playlist) {
-// 		console.log('Got a playlist response');
-// 		return jsonResponse.playlist.map(playlist => ({ playlistID: playlist.id }));
-// 	}
-// })
-// .then();
-//
-// 	}
-// };

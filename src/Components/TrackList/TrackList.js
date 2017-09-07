@@ -6,42 +6,13 @@ class TrackList extends React.Component {
 	render() {
 		return (
 			<div className="TrackList">
-				{console.log('map tracks', this.props.tracks)}
+				{/* {console.log('map tracks', this.props.tracks)} */}
 				{this.props.tracks.map(track => {
-					return (
-						<Track
-							track={track}
-							key={track.id}
-							onAdd={this.props.onAdd}
-							// isRemoval={this.props.isRemoval}
-							onRemove={this.props.onRemove}
-						/>
-					);
+					return <Track track={track} key={track.id} onAdd={this.props.onAdd} onRemove={this.props.onRemove} />;
 				})}
 			</div>
 		);
 	}
 }
-//Trial run
-// 		return (
-// 			<div className="TrackList">
-// 				{console.log('map tracks', map)}
-// 				{this.props.tracks.map(track => {
-// 					return (
-// 						<Track
-// 							onAdd={this.props.onAdd}
-// 							onRemove={this.props.onRemove}
-// 							key={track.id}
-// 							track={track}
-// 							// searchResultsTracks={this.props.tracks}
-// 							tracks={this.props.tracks}
-// 							// tracks={this.props.customTracks}
-// 						/>
-// 					);
-// 				})}
-// 			</div>
-// 		);
-// 	}
-// }
 
 export default TrackList;
